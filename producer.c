@@ -23,7 +23,7 @@ int producer(){
     zm+='A';//转为大写
 
     char buff[10] = {zm};
-    set_lock(fd, F_RDLCK);//给文件上写入锁    
+    set_lock(fd, F_WRLCK);//给文件上写入锁    
     if((filesize=write(fd,buff,strlen(buff)))<0){//写一个字符到文件中
         printf("生产者写入字符失败......\n");
         return -1;    
@@ -43,6 +43,7 @@ int main(int argc , char* argv[]){
       if(argc > 2){
             sscanf(argv[2],"%d",&count);  
       }
+        printf("......生产者生产开始,向myfifo.txt生产%d个字符\n",count);
       while(count>0){
         if(producer()<0){
             break;        

@@ -31,11 +31,11 @@ int myfilecopy(int copycount){//偏移量,要复制的字符个数
     int count = 0 ;
     char buff[10];
     char tempbuff[10];
-    if((in_file = open("myfifo.txt",O_RDWR|O_NONBLOCK))<0){
+    if((in_file = open("myfifo.txt",O_RDWR))<0){
         printf("消费者->复制文件部分->打开源文件部分:失败!");
         return -1;    
     }
-    if((out_file = open("temp.txt",O_CREAT|O_RDWR|O_TRUNC|O_NONBLOCK,0644))<0){
+    if((out_file = open("temp.txt",O_CREAT|O_RDWR,0644))<0){
         printf("消费者->复制文件部分->打开目标文件部分:失败!");
         return -1;    
     }
@@ -78,6 +78,7 @@ int customer(int need){
     myfilecopy(need);
     set_lock(fd, F_UNLCK); /* 给文件解锁 */
 //     unlink("temp.txt");//删除temp文件
+  
     close(fd);
 }
 
@@ -87,10 +88,10 @@ int main(int argc , char* argv[]){
         sscanf(argv[1],"%d",&need);
         
     }
+    printf("......消费者消费myfifo.txt中的元素\n");
     if(need>0){
         customer(need);
     }
+     
     exit(EXIT_SUCCESS);
-        
-    
 }
