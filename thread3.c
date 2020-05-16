@@ -49,6 +49,7 @@ void* thread1(void* arg){
     pthread_exit(NULL);
 }
 void* thread2(void* arg){
+    sleep(1);
     pthread_mutex_lock(&mutex);
     long thrd_num = (long)arg;
     int i;
@@ -60,6 +61,7 @@ void* thread2(void* arg){
     pthread_exit(NULL);
 }
 void* thread3(void* arg){
+    sleep(2);
     pthread_mutex_lock(&mutex);
     long thrd_num = (long)arg;
     int i;
